@@ -1,7 +1,32 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1> Orders </h1>
-<p> You are on the orders page </p>
+<h1> Заказы клиентов </h1>
+
+<table>
+    <tr>
+        <th>ID заказа</th>
+        <th>Дата создания</th>
+        <th>Описание</th>
+        <th>стоимость заказа</th>
+        <th>Заказчик</th>
+        <th>Просмотр</th>
+        <th>Редактирование</th>
+        <th>Удаление</th>
+    </tr>
+    {% for order in orders%}
+    <tr>
+        <td>{{order.id}}</td>
+        <td>{{order.created}}</td>
+        <td>{{order.description}}</td>
+        <td>{{order.amount}}</td>
+        <td>{{order.customer}}</td>
+        <td><a href = "{% url 'single-order' order.customer %}">View</a></td>
+        <td><a href = "">Edit</a></td>
+        <td><a href = "">Delet</a></td>
+    </tr>
+    {% endfor %}
+
+</table>
 
 {% endblock content %}
