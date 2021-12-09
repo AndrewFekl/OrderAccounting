@@ -1,6 +1,13 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1> Project </h1>
+<h1> Проект ID {{ order.id}} </h1>
+<p>Дата создания - {{order.created}}</p>
+<p>Содержание проекта - {{order.description}}</p>
+<p>Стоимость проекта - {{order.amount}}</p>
+<p>Заказчик - {{order.customer}}</p>
+
+<a href = "{% url 'update-order' order.id %}">Редактировать проект</a><br>
+<a href = "{% url 'orders' %}">Вернуться к списку проектов</a>
 
 {% endblock %}

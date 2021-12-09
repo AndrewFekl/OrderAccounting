@@ -21,9 +21,9 @@
         <td>{{order.description}}</td>
         <td>{{order.amount}}</td>
         <td>{{order.customer}}</td>
-        <td><a href = "{% url 'single-order' order.customer %}">View</a></td>
-        <td><a href = "">Edit</a></td>
-        <td><a href = "">Delet</a></td>
+        <td><a href = "{% url 'single-order' order.id %}">View</a></td>
+        <td><a href = "{% url 'update-order' order.id %}">Edit</a></td>
+        <td><a href = "{% url 'delete-order' order.id %}">Delete</a></td>
     </tr>
     {% endfor %}
 

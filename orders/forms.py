@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import  ModelForm, widgets
+from django.forms import ModelForm, widgets
 from .models import Orders
 
 class OrderForm(ModelForm):
@@ -13,9 +13,7 @@ class OrderForm(ModelForm):
             'description': forms.TextInput(attrs={'placeholder': 'Описание заказа'}),
             'amount': forms.TextInput(attrs={'placeholder': 'Стоимость в рублях'}),
         }
-        #widgets = {
-            #'field_name': TextInput(attrs={'placeholder': 'some value'}),
-        #}
+
 
 
 
