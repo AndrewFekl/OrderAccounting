@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1> Понедельная группировка заказов </h1>
+
+<form action='' method = 'POST'>
+    {% csrf_token %}
+    <select name="current_week">
+        <option value="0">За прошедшую неделю</option>
+        <option value="1">2 недели назад</option>
+        <option value="2">3 недели назад</option>
+        <option value="3">4 недели назад</option>
+
+    </select>
+    <input type="submit">
+</form>
+<h2>Заказы за неделю назад</h2>
+<table>
+    {% for line in current_week_orders%}
+    <tr>
+        <td>{{line.date}}</td>
+        <td>{{line.customers}}</td>
+        <td>{{line.orders_sum}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<p></p>
+<a href = "{% url 'orders' %}">На страницу управления заказами</a>
+
+{% endblock %}

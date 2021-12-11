@@ -10,8 +10,6 @@ from django.contrib.auth.models import User
 
 def isBasicAuthenticated(view):
     def apiDecorator(request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return view(request, *args, **kwargs)
 
         if "HTTP_AUTHORIZATION" in request.META:
             # В заголовке basic-авторизации две части, разделенных пробелом.
@@ -33,8 +31,7 @@ def isBasicAuthenticated(view):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     if user.is_active:
-                        login(request, user)
-                        request.user = user
+                        #login(request, user)
                         return view(request, *args, **kwargs)
 
         # Если не авторизовали — даем ответ с 401, требуем авторизоваться

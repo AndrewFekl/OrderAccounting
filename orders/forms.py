@@ -14,6 +14,10 @@ class OrderForm(ModelForm):
             'amount': forms.TextInput(attrs={'placeholder': 'Стоимость в рублях'}),
         }
 
+class SelectForm(forms.Form):
 
+    def __init__(self, question_name, choices, *args, **kwargs):
+        super(SelectForm, self).__init__(*args, **kwargs)
+        self.fields[question_name] = forms.ChoiceField(choices=choices, widget=forms.CheckboxSelectMultiple)
 
 
