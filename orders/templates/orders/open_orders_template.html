@@ -16,6 +16,11 @@
 </form>
 <h2>Заказы за неделю назад</h2>
 <table>
+    <tr>
+        <th>Дата заказа</th>
+        <th>Заказчики</th>
+        <th>Сумма заказов</th>
+    </tr>
     {% for line in current_week_orders%}
     <tr>
         <td>{{line.date}}</td>
@@ -23,6 +28,11 @@
         <td>{{line.orders_sum}}</td>
     </tr>
     {% endfor %}
+    <tr>
+        <td><b>{{current_week_summary.summary}}</b></td>
+        <td><b>{{current_week_summary.customers}}</b></td>
+        <td><b>{{current_week_summary.orders_sum}}</b></td>
+    </tr>
 </table>
 <p></p>
 <a href = "{% url 'orders' %}">На страницу управления заказами</a>

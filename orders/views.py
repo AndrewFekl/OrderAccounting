@@ -63,43 +63,52 @@ class OpenOrdersListView(View):
     def group_orders_by_week_day(self):
         weeks_quantity = 4
         week_number = 1
-        up_date = self.initial_date# + datetime.timedelta(days=1)
+        up_date = self.initial_date
         down_date = self.initial_date - datetime.timedelta(days=1)
         weekly_orders = []
+        weekly_summaries = []
         while week_number <= weeks_quantity:
             day = 1
             current_week_orders = []
+            total_customers = ''
+            total_amount = 0
             while day <= 7:
-                date = up_date# - datetime.timedelta(days=1)
+                date = up_date
                 customers = ''
                 orders_sum = 0
-                day_orders = Orders.objects.filter(created__range=[down_date, up_date])
+                #day_orders = Orders.objects.filter(created__range=[down_date, up_date])
+                day_orders = Orders.objects.filter(created__gt=down_date, created__lte=up_date)
                 if len(day_orders) != 0:
                     for order in day_orders:
                         customers = customers + str(order.customer) + ';'
                         orders_sum += order.amount
                     current_week_orders.append({'date': date, 'customers': customers, 'orders_sum': orders_sum})
+                    total_customers += customers
+                    total_amount += orders_sum
                 day += 1
-                up_date = down_date# + datetime.timedelta(days=1)
+                up_date = down_date
                 down_date = down_date - datetime.timedelta(days=1)
             weekly_orders.append(current_week_orders)
+            weekly_summaries.append({'summary': 'Итого', 'customers': total_customers, 'orders_sum': total_amount})
             week_number += 1
-        return weekly_orders
+        return weekly_orders, weekly_summaries
 
 
     def get(self, request):
-        weekly_orders = self.group_orders_by_week_day()
+        weekly_orders, weekly_summaries = self.group_orders_by_week_day()
         current_week_orders = weekly_orders[0]
+        current_week_summary = weekly_summaries[0]
 
-        context = {'current_week_orders': current_week_orders}
+        context = {'current_week_orders': current_week_orders, 'current_week_summary': current_week_summary}
         return render(request, "orders/open_orders_template.html", context)
 
     def post(self, request):
         current_week = request.POST['current_week']
-        weekly_orders = self.group_orders_by_week_day()
+        weekly_orders, weekly_summaries = self.group_orders_by_week_day()
         current_week_orders = weekly_orders[int(current_week)]
+        current_week_summary = weekly_summaries[int(current_week)]
 
-        context = {'current_week_orders': current_week_orders}
+        context = {'current_week_orders': current_week_orders, 'current_week_summary': current_week_summary}
         return render(request, "orders/open_orders_template.html", context)
 
 
